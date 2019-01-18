@@ -3,12 +3,10 @@ package com.comsince.github.dao;
 import com.comsince.github.model.Article;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
-
 /**
  * Created by comsince
  */
-public interface ArticleDaO {
+public interface ArticleDao {
 
     Article findOne(@Param("id") int id);
 
