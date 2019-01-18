@@ -4,6 +4,7 @@ import com.comsince.github.dao.ArticleDao;
 import com.comsince.github.dao.AuthorDao;
 import com.comsince.github.model.Article;
 import com.comsince.github.model.Author;
+import com.comsince.github.servive.AuthorService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,6 +28,9 @@ public class SpringWithMyBatisTest implements ApplicationContextAware {
 
     @Autowired
     private ArticleDao articleDao;
+
+    @Autowired
+    private AuthorService authorService;
 
     @Before
     public void printBeanInfo() {
@@ -74,6 +78,12 @@ public class SpringWithMyBatisTest implements ApplicationContextAware {
         System.out.println();
         System.out.println("articles info:");
         author.getArticles().forEach(System.out::println);
+    }
+
+    @Test
+    public void testGetAuthor(){
+        Author author = authorService.findOne(1);
+        System.out.println("author---> "+author);
     }
 
     @Override

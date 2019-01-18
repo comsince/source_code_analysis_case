@@ -25,7 +25,6 @@ public class ArticleTest {
         String resource = "mybatis-config.xml";
         InputStream inputStream = Resources.getResourceAsStream(resource);
         sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-        inputStream.close();
     }
 
     @Test
@@ -38,6 +37,19 @@ public class ArticleTest {
         } finally {
             session.commit();
             session.close();
+        }
+    }
+
+    @Test
+    public void testSelectOne(){
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        try {
+            Article article = sqlSession.selectOne("com.comsince.github.dao.ArticleDao.findOne",1);
+            logger.info("select one article {}",article);
+        } catch (Exception e){
+
+        }finally {
+           sqlSession.close();
         }
     }
 }
