@@ -20,5 +20,6 @@
 
     <modules>
         <module>mybatis-example</module>
+        <module>mybatis-spring</module>
     </modules>
 </project>
