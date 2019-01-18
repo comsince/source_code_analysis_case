@@ -8,8 +8,8 @@ import java.util.List;
 /**
  * Created by comsince
  */
-public interface ArticleDO {
+public interface ArticleDaO {
 
-    List<Article> findByAuthorAndCreateTime(@Param("author") String author, @Param("createTime") String createTime);
+    Article findOne(@Param("id") int id);
 
 }
