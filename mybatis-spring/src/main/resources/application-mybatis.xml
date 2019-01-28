@@ -23,6 +23,7 @@
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.comsince.github.dao"/>
+        <!-- 如果不是多个数据源就不需要进行指定-->
         <!--<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>-->
     </bean>
 

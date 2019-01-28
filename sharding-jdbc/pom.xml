@@ -7,23 +7,36 @@
     <version>1.0.0</version>
   </parent>
 
-
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>mybatis-example</artifactId>
+  <artifactId>sharding-jdbc</artifactId>
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>mybatis-simple</name>
   <url>http://maven.apache.org</url>
+
+  <properties>
+    <latest.release.version>3.1.0</latest.release.version>
+    <commons-dbcp.version>1.4</commons-dbcp.version>
+  </properties>
+
   <dependencies>
+
     <dependency>
-      <groupId>org.mybatis</groupId>
-      <artifactId>mybatis</artifactId>
-      <version>3.4.6</version>
+      <groupId>io.shardingsphere</groupId>
+      <artifactId>sharding-jdbc-core</artifactId>
+      <version>${latest.release.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-dbcp</groupId>
+      <artifactId>commons-dbcp</artifactId>
+      <version>${commons-dbcp.version}</version>
     </dependency>
 
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
     </dependency>
+
   </dependencies>
 </project>

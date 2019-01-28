@@ -13,13 +13,60 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
-        <maven.compiler.compilerVersion>1.7</maven.compiler.compilerVersion>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
+        <mysql-connector-java.version>5.1.42</mysql-connector-java.version>
     </properties>
 
     <modules>
         <module>mybatis-example</module>
         <module>mybatis-spring</module>
+        <module>sharding-jdbc</module>
     </modules>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector-java.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!--日志 -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.12</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.21</version>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>log4j</groupId>-->
+            <!--<artifactId>log4j</artifactId>-->
+            <!--<version>1.2.17</version>-->
+        <!--</dependency>-->
+        <!--单元测试 -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
 </project>

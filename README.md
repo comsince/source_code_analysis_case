@@ -2,3 +2,5 @@
 源码分析案例代码
 
 * mybatis-exmaple
+* mybatis-spring
+* sharding-jdbc
