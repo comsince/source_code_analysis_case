@@ -1,6 +1,9 @@
 package com.comsince.github;
 
+import com.comsince.github.config.MasterSlaveConfiguration;
+import com.comsince.github.config.ShardingDatabasesAndTablesConfigurationPrecise;
 import com.comsince.github.config.ShardingDatabasesConfigurationPrecise;
+import com.comsince.github.config.ShardingTablesConfigurationPrecise;
 import com.comsince.github.dao.impl.JDBCOrderItemRepositoryImpl;
 import com.comsince.github.dao.impl.JDBCOrderRepositoryImpl;
 import com.comsince.github.service.CommonService;
@@ -35,15 +38,16 @@ public class JavaConfigurationExample {
             case SHARDING_DATABASES:
                 exampleConfig = new ShardingDatabasesConfigurationPrecise();
                 break;
-//            case SHARDING_TABLES:
-//                exampleConfig = new ShardingTablesConfiguration();
-//                break;
-//            case SHARDING_DATABASES_AND_TABLES:
-//                exampleConfig = new ShardingDatabasesAndTablesConfiguration();
-//                break;
-//            case MASTER_SLAVE:
-//                exampleConfig = new MasterSlaveConfiguration();
-//                break;
+            case SHARDING_TABLES:
+                exampleConfig = new ShardingTablesConfigurationPrecise();
+                break;
+            case SHARDING_DATABASES_AND_TABLES:
+                exampleConfig = new ShardingDatabasesAndTablesConfigurationPrecise();
+                break;
+            case MASTER_SLAVE:
+                //配置主从数据同步
+                exampleConfig = new MasterSlaveConfiguration();
+                break;
 //            case SHARDING_MASTER_SLAVE:
 //                exampleConfig = new ShardingMasterSlaveConfiguration();
 //                break;

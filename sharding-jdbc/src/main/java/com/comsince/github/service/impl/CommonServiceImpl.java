@@ -45,6 +45,16 @@ public abstract class CommonServiceImpl implements CommonService{
     }
 
     @Override
+    public void processSuccess(final boolean isRangeSharding) {
+        System.out.println("-------------- Process Success Begin ---------------");
+        List<Long> orderIds = insertData();
+        printData(isRangeSharding);
+        deleteData(orderIds);
+        printData(isRangeSharding);
+        System.out.println("-------------- Process Success Finish --------------");
+    }
+
+    @Override
     public void processFailure() {
 
     }
@@ -73,6 +83,40 @@ public abstract class CommonServiceImpl implements CommonService{
             getOrderRepository().delete(each);
             getOrderItemRepository().delete(each);
         }
+    }
+
+    @Override
+    public void printData(final boolean isRangeSharding) {
+        if (isRangeSharding) {
+            printDataRange();
+        } else {
+            printDataAll();
+        }
+    }
+
+    private void printDataRange() {
+        System.out.println("---------------------------- Print Order Data -----------------------");
+        for (Object each : getOrderRepository().selectRange()) {
+            System.out.println(each);
+        }
+        System.out.println("---------------------------- Print OrderItem Data -------------------");
+        for (Object each : getOrderItemRepository().selectRange()) {
+            System.out.println(each);
+        }
+    }
+
+    private void printDataAll() {
+        getOrderRepository().selectAll();
+        System.out.println("--------------------------------------------------");
+        long before = System.nanoTime();
+        for (int i = 0; i < 1; i++) {
+            getOrderRepository().selectAll();
+        }
+        System.out.println("Total:" + (System.nanoTime() - before));
+//        System.out.println("---------------------------- Print OrderItem Data -------------------");
+//        for (Object each : getOrderItemRepository().selectAll()) {
+//            System.out.println(each);
+//        }
     }
 
     @Override

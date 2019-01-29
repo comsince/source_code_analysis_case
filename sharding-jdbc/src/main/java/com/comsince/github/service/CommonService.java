@@ -12,7 +12,11 @@ public interface CommonService {
 
     void processSuccess();
 
+    void processSuccess(boolean isRangeSharding);
+
     void processFailure();
+
+    void printData(boolean isRangeSharding);
 
     void printData();
 }
