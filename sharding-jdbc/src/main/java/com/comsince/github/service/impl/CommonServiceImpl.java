@@ -49,7 +49,7 @@ public abstract class CommonServiceImpl implements CommonService{
         System.out.println("-------------- Process Success Begin ---------------");
         List<Long> orderIds = insertData();
         printData(isRangeSharding);
-        deleteData(orderIds);
+        //deleteData(orderIds);
         printData(isRangeSharding);
         System.out.println("-------------- Process Success Finish --------------");
     }
