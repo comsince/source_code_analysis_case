@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author comsicne
@@ -50,8 +51,8 @@ public abstract class CommonServiceImpl implements CommonService{
         List<Long> orderIds = insertData();
         printData(isRangeSharding);
         //同一事务中不要即插入又修改，会导致死锁
-//        deleteData(orderIds);
-//        printData(isRangeSharding);
+        deleteData(orderIds);
+        printData(isRangeSharding);
         logger.info("-------------- Process Success Finish --------------");
     }
 
@@ -60,7 +61,10 @@ public abstract class CommonServiceImpl implements CommonService{
         logger.info("-------------- Process Failure Begin ---------------");
         insertData();
         logger.info("-------------- Process Failure Finish --------------");
-        throw new RuntimeException("Exception occur for transaction test.");
+        //if(new Random().nextBoolean()){
+            logger.error("processFailure exception");
+            throw new RuntimeException("Exception occur for transaction test.");
+        //}
     }
 
     private List<Long> insertData() {

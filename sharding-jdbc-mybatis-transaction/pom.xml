@@ -8,36 +8,41 @@
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>sharding-jdbc-transaction</artifactId>
+  <artifactId>sharding-jdbc-mybatis-transaction</artifactId>
   <packaging>jar</packaging>
   <version>${project.verson}</version>
   <url>http://maven.apache.org</url>
 
   <properties>
-
+    <latest.release.version>3.1.0</latest.release.version>
+    <commons-dbcp.version>1.4</commons-dbcp.version>
   </properties>
 
   <dependencies>
 
     <dependency>
       <groupId>com.comsince.github</groupId>
-      <artifactId>sharding-jdbc</artifactId>
+      <artifactId>sharding-jdbc-mybatis</artifactId>
       <version>${project.verson}</version>
     </dependency>
 
     <dependency>
+      <groupId>com.comsince.github</groupId>
+      <artifactId>sharding-jdbc-transaction</artifactId>
+      <version>${project.verson}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjweaver</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context-support</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-tx</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>io.shardingsphere</groupId>
-      <artifactId>sharding-transaction-2pc-xa</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>io.shardingsphere</groupId>
-      <artifactId>sharding-transaction-spring</artifactId>
     </dependency>
 
 

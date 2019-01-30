@@ -61,12 +61,12 @@ public final class RawPojoTransactionService extends CommonServiceImpl implement
         executeFailure();
     }
 
-    @Override
-    public void processSuccess(boolean isRangeSharding) {
-        TransactionTypeHolder.set(TransactionType.LOCAL);
-        printTransactionType();
-        executeSuccess(isRangeSharding);
-    }
+//    @Override
+//    public void processSuccess(boolean isRangeSharding) {
+//        TransactionTypeHolder.set(TransactionType.LOCAL);
+//        printTransactionType();
+//        executeSuccess(isRangeSharding);
+//    }
 
     @Override
     public void printTransactionType() {

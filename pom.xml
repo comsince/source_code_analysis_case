@@ -21,6 +21,7 @@
         <sharding-sphere.version>3.1.0</sharding-sphere.version>
         <mybatis-spring.version>1.3.2</mybatis-spring.version>
         <mybatis.version>3.4.2</mybatis.version>
+        <aspectjweaver.version>1.8.9</aspectjweaver.version>
     </properties>
 
     <modules>
@@ -30,6 +31,7 @@
         <module>sharding-jdbc-mybatis</module>
         <module>sharding-jdbc-mybatis-springboot</module>
         <module>sharding-jdbc-transaction</module>
+        <module>sharding-jdbc-mybatis-transaction</module>
     </modules>
 
 
@@ -65,18 +67,6 @@
             <dependency>
                 <groupId>io.shardingsphere</groupId>
                 <artifactId>sharding-transaction-2pc-xa</artifactId>
-                <version>${sharding-sphere.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.shardingsphere</groupId>
-                <artifactId>sharding-transaction-core</artifactId>
-                <version>${sharding-sphere.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.shardingsphere</groupId>
-                <artifactId>sharding-transaction-xa-core</artifactId>
                 <version>${sharding-sphere.version}</version>
             </dependency>
 
@@ -117,6 +107,18 @@
                 <artifactId>spring-test</artifactId>
                 <version>${spring.version}</version>
                 <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context-support</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>${aspectjweaver.version}</version>
             </dependency>
 
             <!--spring boot starter-->
