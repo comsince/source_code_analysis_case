@@ -2,6 +2,8 @@ package com.comsince.github.dao.impl;
 
 import com.comsince.github.dao.OrderRepository;
 import com.comsince.github.dao.entity.Order;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -14,6 +16,8 @@ import java.util.List;
  * @Time 19-1-28 下午2:29
  **/
 public final class JDBCOrderRepositoryImpl implements OrderRepository{
+
+    Logger logger = LoggerFactory.getLogger(JDBCOrderRepositoryImpl.class);
 
     private final DataSource dataSource;
 
@@ -76,6 +80,7 @@ public final class JDBCOrderRepositoryImpl implements OrderRepository{
             preparedStatement.setLong(1, orderId);
             preparedStatement.executeUpdate();
         } catch (final SQLException ignored) {
+            logger.error("delete orderId "+orderId+" "+ignored);
         }
     }
 

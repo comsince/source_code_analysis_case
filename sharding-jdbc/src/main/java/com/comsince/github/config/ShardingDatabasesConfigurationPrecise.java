@@ -39,6 +39,7 @@ public class ShardingDatabasesConfigurationPrecise implements ExampleConfigurati
     private static TableRuleConfiguration getOrderItemTableRuleConfiguration() {
         TableRuleConfiguration result = new TableRuleConfiguration();
         result.setLogicTable("t_order_item");
+        result.setKeyGeneratorColumnName("order_item_id");
         return result;
     }
 

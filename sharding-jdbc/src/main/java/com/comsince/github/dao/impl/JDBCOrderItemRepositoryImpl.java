@@ -2,6 +2,8 @@ package com.comsince.github.dao.impl;
 
 import com.comsince.github.dao.OrderItemRepository;
 import com.comsince.github.dao.entity.OrderItem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -14,6 +16,8 @@ import java.util.List;
  * @Time 19-1-28 下午2:39
  **/
 public final class JDBCOrderItemRepositoryImpl implements OrderItemRepository {
+
+    Logger logger = LoggerFactory.getLogger(JDBCOrderItemRepositoryImpl.class);
 
     private final DataSource dataSource;
 
@@ -72,20 +76,23 @@ public final class JDBCOrderItemRepositoryImpl implements OrderItemRepository {
     }
 
     @Override
-    public void delete(Long orderItemId) {
-        String sql = "DELETE FROM t_order_item WHERE order_item_id=?";
+    public void delete(Long orderId) {
+        String sql = "DELETE FROM t_order_item WHERE order_id=?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            preparedStatement.setLong(1, orderItemId);
-            preparedStatement.executeUpdate(sql);
+            preparedStatement.setLong(1, orderId);
+            preparedStatement.executeUpdate();
         } catch (final SQLException ignored) {
+            logger.info("delete orderId "+orderId+" error "+ignored);
         }
+
+
     }
 
     @Override
     public List<OrderItem> selectAll() {
         List<OrderItem> result = new LinkedList<>();
-        String sql = "SELECT i.* FROM t_order o, t_order_item i WHERE o.order_id = i.order_id";
+        String sql = "SELECT * FROM t_order_item";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(sql);
              ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -98,6 +105,7 @@ public final class JDBCOrderItemRepositoryImpl implements OrderItemRepository {
                 result.add(orderItem);
             }
         } catch (final SQLException ignored) {
+            logger.error("select order item error "+ignored);
         }
         return result;
     }

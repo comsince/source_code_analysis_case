@@ -30,33 +30,37 @@ public abstract class CommonServiceImpl implements CommonService{
 
     @Override
     public void cleanEnvironment() {
-        //getOrderRepository().dropTable();
-        //getOrderItemRepository().dropTable();
+//        getOrderRepository().dropTable();
+//        getOrderItemRepository().dropTable();
     }
 
     @Override
     public void processSuccess() {
-        logger.info("-------------- Process Success Begin ---------------");
+        logger.info("-------------- Process1 Success Begin ---------------");
         List<Long> orderIds = insertData();
         printData();
-        //deleteData(orderIds);
+        deleteData(orderIds);
         printData();
-        logger.info("-------------- Process Success Finish --------------");
+        logger.info("-------------- Process1 Success Finish --------------");
     }
 
     @Override
     public void processSuccess(final boolean isRangeSharding) {
-        System.out.println("-------------- Process Success Begin ---------------");
+        logger.info("-------------- Process Success isRangeSharding Begin ---------------");
         List<Long> orderIds = insertData();
         printData(isRangeSharding);
-        //deleteData(orderIds);
-        printData(isRangeSharding);
-        System.out.println("-------------- Process Success Finish --------------");
+        //同一事务中不要即插入又修改，会导致死锁
+//        deleteData(orderIds);
+//        printData(isRangeSharding);
+        logger.info("-------------- Process Success Finish --------------");
     }
 
     @Override
     public void processFailure() {
-
+        logger.info("-------------- Process Failure Begin ---------------");
+        insertData();
+        logger.info("-------------- Process Failure Finish --------------");
+        throw new RuntimeException("Exception occur for transaction test.");
     }
 
     private List<Long> insertData() {
@@ -95,28 +99,27 @@ public abstract class CommonServiceImpl implements CommonService{
     }
 
     private void printDataRange() {
-        System.out.println("---------------------------- Print Order Data -----------------------");
+        logger.info("---------------------------- Print Order Data -----------------------");
         for (Object each : getOrderRepository().selectRange()) {
-            System.out.println(each);
+            logger.info(each.toString());
         }
-        System.out.println("---------------------------- Print OrderItem Data -------------------");
+        logger.info("---------------------------- Print OrderItem Data -------------------");
         for (Object each : getOrderItemRepository().selectRange()) {
-            System.out.println(each);
+            logger.info(each.toString());
         }
     }
 
     private void printDataAll() {
-        getOrderRepository().selectAll();
-        System.out.println("--------------------------------------------------");
+        logger.info("------------------Print Order Data --------------------------------");
         long before = System.nanoTime();
-        for (int i = 0; i < 1; i++) {
-            getOrderRepository().selectAll();
+        for(Order order : getOrderRepository().selectAll()){
+            logger.info(order.toString());
         }
-        System.out.println("Total:" + (System.nanoTime() - before));
-//        System.out.println("---------------------------- Print OrderItem Data -------------------");
-//        for (Object each : getOrderItemRepository().selectAll()) {
-//            System.out.println(each);
-//        }
+        logger.info("------------------Print Order Item Data --------------------------------");
+        for (OrderItem orderItem : getOrderItemRepository().selectAll()) {
+            logger.info(orderItem.toString());
+        }
+        logger.info("Total:" + (System.nanoTime() - before));
     }
 
     @Override
