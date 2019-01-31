@@ -40,6 +40,5 @@
       <artifactId>sharding-transaction-spring</artifactId>
     </dependency>
 
-
   </dependencies>
 </project>

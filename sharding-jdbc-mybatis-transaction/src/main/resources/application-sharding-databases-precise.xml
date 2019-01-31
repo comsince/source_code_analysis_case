@@ -12,7 +12,9 @@
                         http://www.springframework.org/schema/context/spring-context.xsd
                         http://shardingsphere.io/schema/shardingsphere/sharding
                         http://shardingsphere.io/schema/shardingsphere/sharding/sharding.xsd">
-    <!--<import resource="classpath:META-INF/shardingTransaction.xml"/>-->
+
+    <!--启动事务切面 -->
+    <import resource="classpath:META-INF/shardingTransaction.xml"/>
     <context:component-scan base-package="com.comsince.github" />
 
     <!-- 变量替换有可能与sharding发生冲突-->
