@@ -18,3 +18,4 @@ spring 集成mybatis-sharding jdbc
 
 * __sharding-jdbc-transaction__
 * __sharding-jdbc-mybatis-transaction__
+* __sharding-jdbc-mybatis-springboot-transaction__

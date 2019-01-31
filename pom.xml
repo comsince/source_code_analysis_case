@@ -32,6 +32,7 @@
         <module>sharding-jdbc-mybatis-springboot</module>
         <module>sharding-jdbc-transaction</module>
         <module>sharding-jdbc-mybatis-transaction</module>
+        <module>sharding-jdbc-mybatis-springboot-transaction</module>
     </modules>
 
 
@@ -73,6 +74,12 @@
             <dependency>
                 <groupId>io.shardingsphere</groupId>
                 <artifactId>sharding-transaction-spring</artifactId>
+                <version>${sharding-sphere.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.shardingsphere</groupId>
+                <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
                 <version>${sharding-sphere.version}</version>
             </dependency>
 
