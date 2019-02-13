@@ -33,6 +33,7 @@
         <module>sharding-jdbc-transaction</module>
         <module>sharding-jdbc-mybatis-transaction</module>
         <module>sharding-jdbc-mybatis-springboot-transaction</module>
+        <module>t-io</module>
     </modules>
 
 
