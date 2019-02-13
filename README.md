@@ -19,3 +19,7 @@ spring 集成mybatis-sharding jdbc
 * __sharding-jdbc-transaction__
 * __sharding-jdbc-mybatis-transaction__
 * __sharding-jdbc-mybatis-springboot-transaction__
+
+
+### t-io
+网络框架,原始版本来源于[t-io](https://github.com/tywo45/t-io)
