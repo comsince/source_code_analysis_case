@@ -23,3 +23,10 @@ spring 集成mybatis-sharding jdbc
 
 ### t-io
 网络框架,原始版本来源于[t-io](https://github.com/tywo45/t-io)
+
+### elastic-job
+
+
+```shell
+mvn archetype:generate -DgroupId=com.comsince.github -DartifactId=push-connector-DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+```
