@@ -25,7 +25,7 @@ public class QuartzMain {
                 .withIdentity("myTrigger", "group1")
                 .startNow()
                 .withSchedule(simpleSchedule()
-                        .withIntervalInSeconds(4)
+                        .withIntervalInSeconds(10)
                         .repeatForever())
                 .build();
 
@@ -34,6 +34,22 @@ public class QuartzMain {
             Scheduler scheduler = factory.getScheduler();
             scheduler.start();
             scheduler.scheduleJob(job,trigger);
+
+
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(2*1000);
+                        scheduler.triggerJob(new JobKey("SimpleJob","group"));
+                    } catch (SchedulerException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
         } catch (SchedulerException e) {
             e.printStackTrace();
         }

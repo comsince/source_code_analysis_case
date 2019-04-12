@@ -29,11 +29,11 @@ public class SpringDataflowJob implements DataflowJob<Foo> {
 
     @Override
     public void processData(final ShardingContext shardingContext, final List<Foo> data) {
-//        try {
-//            Thread.sleep(10 * 1000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            Thread.sleep(10 * 1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         System.out.println(String.format("Item: %s | Time: %s | Thread: %s | %s",
                 shardingContext.getShardingItem(), new SimpleDateFormat("HH:mm:ss").format(new Date()), Thread.currentThread().getId(), "DATAFLOW PROCESS"));
         for (Foo each : data) {

@@ -14,6 +14,10 @@ import com.dangdang.ddframe.job.reg.base.CoordinatorRegistryCenter;
 import com.dangdang.ddframe.job.reg.zookeeper.ZookeeperConfiguration;
 import com.dangdang.ddframe.job.reg.zookeeper.ZookeeperRegistryCenter;
 import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.curator.framework.CuratorFramework;
+import org.apache.curator.framework.recipes.cache.TreeCache;
+import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
+import org.apache.curator.framework.recipes.cache.TreeCacheListener;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -28,7 +32,7 @@ import java.nio.file.attribute.PosixFilePermissions;
  * @Time 19-4-9 上午10:29
  **/
 public class JavaMain {
-    private static final int EMBED_ZOOKEEPER_PORT = 4181;
+    private static final int EMBED_ZOOKEEPER_PORT = 2181;
 
     private static final String ZOOKEEPER_CONNECTION_STRING = "localhost:" + EMBED_ZOOKEEPER_PORT;
 
@@ -49,12 +53,28 @@ public class JavaMain {
     // CHECKSTYLE:OFF
     public static void main(final String[] args) throws IOException {
         // CHECKSTYLE:ON
-        EmbedZookeeperServer.start(EMBED_ZOOKEEPER_PORT);
+        //EmbedZookeeperServer.start(EMBED_ZOOKEEPER_PORT);
         CoordinatorRegistryCenter regCenter = setUpRegistryCenter();
+
+        System.out.println("javaSimpleJob config "+regCenter.getDirectly("/javaSimpleJob/config"));
+        System.out.println("javaSimpleJob children num "+regCenter.getNumChildren("/javaSimpleJob"));
+        regCenter.persistEphemeral("/test","testdata");
+        regCenter.persistEphemeral("/test1","testdata");
+
+
+
         JobEventConfiguration jobEventConfig = new JobEventRdbConfiguration(setUpEventTraceDataSource());
         setUpSimpleJob(regCenter, jobEventConfig);
         setUpDataflowJob(regCenter, jobEventConfig);
 //        setUpScriptJob(regCenter, jobEventConfig);
+
+        TreeCache treeCache = (TreeCache) regCenter.getRawCache("/javaSimpleJob");
+        treeCache.getListenable().addListener(new TreeCacheListener() {
+            @Override
+            public void childEvent(CuratorFramework client, TreeCacheEvent event) throws Exception {
+                System.out.println("receive event "+event.getType());
+            }
+        });
     }
 
     private static CoordinatorRegistryCenter setUpRegistryCenter() {

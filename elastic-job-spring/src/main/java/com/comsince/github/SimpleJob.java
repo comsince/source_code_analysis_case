@@ -4,6 +4,9 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * @author comsicne
  *         Copyright (c) [2019] [Meizu.inc]
@@ -15,7 +18,7 @@ public class SimpleJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        System.out.println("jobname "+jobname+" jobstatus "+jobstatus);
+        System.out.println(new SimpleDateFormat("YYYY-MM-DD HH:mm:ss").format(new Date())+" jobname "+jobname+" jobstatus "+jobstatus);
     }
 
     public String getJobname() {
