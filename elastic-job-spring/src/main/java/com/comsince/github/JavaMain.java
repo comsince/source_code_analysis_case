@@ -65,16 +65,16 @@ public class JavaMain {
 
         JobEventConfiguration jobEventConfig = new JobEventRdbConfiguration(setUpEventTraceDataSource());
         setUpSimpleJob(regCenter, jobEventConfig);
-        setUpDataflowJob(regCenter, jobEventConfig);
+        //setUpDataflowJob(regCenter, jobEventConfig);
 //        setUpScriptJob(regCenter, jobEventConfig);
 
-        TreeCache treeCache = (TreeCache) regCenter.getRawCache("/javaSimpleJob");
-        treeCache.getListenable().addListener(new TreeCacheListener() {
-            @Override
-            public void childEvent(CuratorFramework client, TreeCacheEvent event) throws Exception {
-                System.out.println("receive event "+event.getType());
-            }
-        });
+//        TreeCache treeCache = (TreeCache) regCenter.getRawCache("/javaSimpleJob");
+//        treeCache.getListenable().addListener(new TreeCacheListener() {
+//            @Override
+//            public void childEvent(CuratorFramework client, TreeCacheEvent event) throws Exception {
+//                System.out.println("receive event "+event.getType());
+//            }
+//        });
     }
 
     private static CoordinatorRegistryCenter setUpRegistryCenter() {

@@ -1,7 +1,10 @@
 package com.comsince.github;
 
+import com.dangdang.ddframe.job.lite.internal.schedule.JobShutdownHookPlugin;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
+
+import java.util.Properties;
 
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 
@@ -31,6 +34,11 @@ public class QuartzMain {
 
         StdSchedulerFactory factory = new StdSchedulerFactory();
         try {
+            factory.initialize(getBaseQuartzProperties());
+        } catch (SchedulerException e) {
+            e.printStackTrace();
+        }
+        try {
             Scheduler scheduler = factory.getScheduler();
             scheduler.start();
             scheduler.scheduleJob(job,trigger);
@@ -41,11 +49,12 @@ public class QuartzMain {
                 @Override
                 public void run() {
                     try {
-                        Thread.sleep(2*1000);
-                        scheduler.triggerJob(new JobKey("SimpleJob","group"));
-                    } catch (SchedulerException e) {
-                        e.printStackTrace();
+                        Thread.sleep(20*1000);
+                        //scheduler.triggerJob(new JobKey("SimpleJob","group"));
+                        scheduler.pauseAll();
                     } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (SchedulerException e) {
                         e.printStackTrace();
                     }
                 }
@@ -53,6 +62,17 @@ public class QuartzMain {
         } catch (SchedulerException e) {
             e.printStackTrace();
         }
+    }
+
+    private static Properties getBaseQuartzProperties() {
+        Properties result = new Properties();
+        result.put("org.quartz.threadPool.class", org.quartz.simpl.SimpleThreadPool.class.getName());
+        result.put("org.quartz.threadPool.threadCount", "1");
+        result.put("org.quartz.scheduler.instanceName", "quartzjob");
+        result.put("org.quartz.jobStore.misfireThreshold", "1");
+        result.put("org.quartz.plugin.shutdownhook.class", JobShutdownHookPlugin.class.getName());
+        result.put("org.quartz.plugin.shutdownhook.cleanShutdown", Boolean.TRUE.toString());
+        return result;
     }
 
 }

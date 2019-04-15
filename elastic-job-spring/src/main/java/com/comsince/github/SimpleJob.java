@@ -18,7 +18,19 @@ public class SimpleJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        System.out.println(new SimpleDateFormat("YYYY-MM-DD HH:mm:ss").format(new Date())+" jobname "+jobname+" jobstatus "+jobstatus);
+        int i =0;
+        while (true){
+            i++;
+            if(i>10){
+                break;
+            }
+            System.out.println(Thread.currentThread().getId()+" "+new SimpleDateFormat("YYYY-MM-DD HH:mm:ss").format(new Date())+" jobname "+jobname+" jobstatus "+jobstatus);
+            try {
+                Thread.sleep(2*1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public String getJobname() {
