@@ -1,7 +1,4 @@
-# elastic-job
-
-
-
+# elastic-job 原理解析
 ## 概述
 分布式任务调度框架源码分析，主要从设计思想分析其大致的实现思路
 * 依赖组件  
@@ -74,7 +71,7 @@ public final class LiteJob implements Job {
 * AbstractElasticJobExecutor 
 基于模板的设计模式,这里定义任务执行的大体框架,elastic job主要依赖zookeeper作为数据存储中心，因此熟悉其数据结构成为理解其工作原理的关键
 
-* ![image](http://static.iocoder.cn/images/Elastic-Job/2017_10_07/02.png)
+![image](http://static.iocoder.cn/images/Elastic-Job/2017_10_07/02.png)
 
 ```properties
 --jobName
