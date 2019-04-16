@@ -71,6 +71,39 @@ public final class LiteJob implements Job {
 }
 ```
 
+* AbstractElasticJobExecutor 
+基于模板的设计模式,这里定义任务执行的大体框架,elastic job主要依赖zookeeper作为数据存储中心，因此熟悉其数据结构成为理解其工作原理的关键
+
+* ![image](http://static.iocoder.cn/images/Elastic-Job/2017_10_07/02.png)
+
+```properties
+--jobName
+       --config 存储job的相关配置信息
+       --servers
+         -- ${ip} 表明当前服务器是否启用等信息
+       --instances 当前运行实例节点
+         --${ip}@-@${pid}
+       --sharding
+         --${分片项}
+           --running 作业运行中标记
+           --instances 节点数据表示：${ip}@-@${pid} 当前分片在那个机器上运行
+           --failover 当前分片失效节点信息，以便于重新执行
+           --disable 是否禁用此分片项
+           --misfire 是否开启错过任务重新执行
+       --leader
+         --sharding
+           --necessary 是否需要执行分片
+           --processing 是否正在执行分片
+         --election
+           --latch 主节点选取
+           --instances
+              --${ip}@-@${pid} 当前leader节点，临时节点
+         --failover
+           --items
+             --${分片项} 存储当前失效转移的分片项，latch锁竞争获取
+           --latch 执行失效转移的锁
+```
+
 ## zookeeper任务配置信息
 
 ```json
@@ -99,8 +132,34 @@ public final class LiteJob implements Job {
 }
 
 ```
+## 核心流程 
+### 主节点选举
+利用`leader/election/latch`分布式锁，选举出一个节点，进而在`leader/election/instances`写入该leader节点信息，该节点为临时节点
 
-## 作业分片
-采用先标记，在下次运行任务的时候，如果有重新分片的情况，由主节点进行重新分片，然后各个节点读取，进而进行任务执行
+### 节点分片
+* 判断当前是不是主节点`leader/election/instances`是不是存储的本节点信息
+* 等待所有的分片执行完毕`/sharding/${分片项}/running`节点都移除
+* 利用配置的分片策略，对各个服务器分配对应的分片项
+* 写入`leader/sharding/necessary`节点
+* 执行写入分片 配置`/sharding/${分片项}/instances`到节点data
+* 删除 `leader/sharding/necessary` `leader/sharding/processing` 上面三个操作写入删除在同一事务中进行
+* 获取当前节点的分片项
+* 根据配置参数生成当前分片上下文shardingContext
 
-## 失效转移
+### 失效转移
+策略的促发主要来自于监听zookeeper节点的变更
+#### JobCrashedJobListener失败监听
+* 获取失效节点`sharding/${分片项}/failover` 节点data存储当前失效节点信息
+* 如果failover节点无数据，获取当前节点的分片项`/sharding/${分片项}`,然后创建失效节点`/leader/failover/items/${分片项}`
+* 新节点从`/leader/failover/items/` 选取第一个分片执行,并删除该节点，然后重新触发执行,这里是事务的方式执行，保证同个分片只能在一个节点上重新执行
+* 失效分片转移执行结束时需要删除`sharding/${分片项}/failover`，因为下次执行任务时会重新促发分片
+
+### 错过执行作业重触发
+错过执行即是在前一个任务还在执行的过程中，下个任务的时间点到达，重新促发任务执行操作
+* 检查是否存在作业错过执行的情况`/sharding/${分片}/running`仍然存在与下次促发时相关的分片，代表由任务还在执行中
+* 建立相应的`/sharding/${分片}/misfire`持久节点,然后退出执行
+* 当前任务执行完毕后，检查是否存在misfire分片,然后启动执行
+
+## 总结
+elasticjob 基本时围绕zookeeper节点数据进行策略逻辑整合，也更加说明，一个两个数据结构，能够将问题逻辑条理化。
+项目的核心在于基于quartz触发job开始后一系列预定义策略，这也是模板设计模式的最好印证。这也更好说明，框架更时一种预定义的策略，策略的整合时这个框架的灵魂
