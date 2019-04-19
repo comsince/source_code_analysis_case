@@ -35,6 +35,7 @@
         <module>sharding-jdbc-mybatis-springboot-transaction</module>
         <module>t-io</module>
         <module>elastic-job-spring</module>
+        <module>netty-example</module>
     </modules>
 
 

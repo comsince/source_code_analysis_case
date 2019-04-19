@@ -26,6 +26,8 @@ spring 集成mybatis-sharding jdbc
 
 ### elastic-job
 
+分布式调度框架，主要采用quartz作为单击任务调度基础，结合 zookeeper的配置托管实现任务分片执行，失效转移等特性
+
 
 ```shell
 mvn archetype:generate -DgroupId=com.comsince.github -DartifactId=push-connector-DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
