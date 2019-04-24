@@ -1,6 +1,11 @@
 package com.comsince.github;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.socket.nio.NioSocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.nio.channels.SocketChannel;
 
 
 /**
@@ -13,6 +18,7 @@ public class NettyMain {
     Logger logger = LoggerFactory.getLogger(NettyMain.class);
 
     public static void main(String[] args) throws Exception{
+        //buffer();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -26,11 +32,28 @@ public class NettyMain {
         }).start();
 
 
-//         Client client =  new Client();
-//         client.connect("localhost",6789);
+         Client client =  new Client();
+         client.connect("localhost",6789);
+         //client.writeMessage();
          for(;;){
              Thread.sleep(Integer.MAX_VALUE);
          }
+
+    }
+
+
+    public static void buffer(){
+        ByteBuf byteBuf = Unpooled.buffer(128,1024);
+        System.out.println("readIndex "+byteBuf.readerIndex()+" writeIndex "+byteBuf.writerIndex()+" capacity "+byteBuf.capacity());
+        byte[] test = new byte[129];
+        byteBuf.writeBytes(test);
+        System.out.println("readIndex "+byteBuf.readerIndex()+" writeIndex "+byteBuf.writerIndex()+" capacity "+byteBuf.capacity());
+        byteBuf.writeByte(1);
+        System.out.println("readIndex "+byteBuf.readerIndex()+" writeIndex "+byteBuf.writerIndex() +" capacity "+byteBuf.capacity());
+        for(int i = 0;i<6;i++){
+            byteBuf.writeByte(0);
+        }
+        System.out.println("readIndex "+byteBuf.readerIndex()+" writeIndex "+byteBuf.writerIndex() +" capacity "+byteBuf.capacity());
     }
 
 

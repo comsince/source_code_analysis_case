@@ -24,6 +24,7 @@ public class Client {
     }
 
     protected Bootstrap                 bootstrap;
+    private Channel channel;
 
 
     private void initClientBootrap(){
@@ -42,8 +43,7 @@ public class Client {
 
             @Override
             protected void initChannel(SocketChannel channel) {
-
-
+                 channel.pipeline().addLast(new MyInboundHandler());
             }
         });
     }
@@ -67,6 +67,11 @@ public class Client {
             logger.warn(errMsg);
             throw new Exception(errMsg, future.cause());
         }
-        return future.channel();
+        channel = future.channel();
+        return channel;
+    }
+
+    public void writeMessage(){
+        channel.write("message");
     }
 }
