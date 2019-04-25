@@ -35,15 +35,8 @@ public class NettyMain {
 //        }).start();
 
 
-         Client client =  new Client();
-         client.connect("172.16.177.107",6789);
-         client.sub().addListener(new ChannelFutureListener() {
-             @Override
-             public void operationComplete(ChannelFuture future) throws Exception {
-                  System.out.println("Send success "+future.isSuccess());
-             }
-         });
-
+         Client client =  new Client("172.16.177.107",6789);
+         client.start();
          for(;;){
              Thread.sleep(Integer.MAX_VALUE);
          }
