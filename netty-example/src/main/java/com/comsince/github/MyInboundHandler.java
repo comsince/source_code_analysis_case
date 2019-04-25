@@ -19,4 +19,10 @@ public class MyInboundHandler extends ChannelInboundHandlerAdapter{
         logger.info("TCP Connected");
         super.channelActive(ctx);
     }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        logger.info("TCP DisConnected");
+        super.channelInactive(ctx);
+    }
 }

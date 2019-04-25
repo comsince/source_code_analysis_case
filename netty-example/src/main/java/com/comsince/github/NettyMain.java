@@ -1,11 +1,14 @@
 package com.comsince.github;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.channels.SocketChannel;
+import java.util.concurrent.CountDownLatch;
 
 
 /**
@@ -19,22 +22,28 @@ public class NettyMain {
 
     public static void main(String[] args) throws Exception{
         //buffer();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Server server = new Server();
-                try {
-                    server.doStart();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                Server server = new Server();
+//                try {
+//                    server.doStart();
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }).start();
 
 
          Client client =  new Client();
-         client.connect("localhost",6789);
-         //client.writeMessage();
+         client.connect("172.16.177.107",6789);
+         client.sub().addListener(new ChannelFutureListener() {
+             @Override
+             public void operationComplete(ChannelFuture future) throws Exception {
+                  System.out.println("Send success "+future.isSuccess());
+             }
+         });
+
          for(;;){
              Thread.sleep(Integer.MAX_VALUE);
          }

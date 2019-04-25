@@ -1,5 +1,8 @@
 package com.comsince.github;
 
+import com.comsince.github.model.RequestCommand;
+import com.comsince.github.model.Signal;
+import com.comsince.github.model.SubRequest;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.*;
@@ -44,6 +47,9 @@ public class Client {
             @Override
             protected void initChannel(SocketChannel channel) {
                  channel.pipeline().addLast(new MyInboundHandler());
+                 channel.pipeline().addLast(new PushMessageEncoder());
+                 channel.pipeline().addLast(new PushMessageDecoder());
+                 channel.pipeline().addLast(new PushMessageHandler());
             }
         });
     }
@@ -73,5 +79,9 @@ public class Client {
 
     public void writeMessage(){
         channel.write("message");
+    }
+
+    public ChannelFuture sub(){
+        return channel.writeAndFlush(new SubRequest());
     }
 }
