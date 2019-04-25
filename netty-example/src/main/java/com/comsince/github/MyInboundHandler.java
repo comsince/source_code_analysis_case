@@ -32,6 +32,7 @@ public class MyInboundHandler extends ChannelInboundHandlerAdapter{
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         logger.info("TCP Connected");
         if(client != null){
+            client.sub();
             client.scheduleHeartBeat();
         }
         super.channelActive(ctx);

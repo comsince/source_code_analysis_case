@@ -130,7 +130,6 @@ public class Client {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        sub();
     }
 
     public void stop(){

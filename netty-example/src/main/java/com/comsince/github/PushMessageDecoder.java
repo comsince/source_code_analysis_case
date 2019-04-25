@@ -31,7 +31,6 @@ public class PushMessageDecoder extends ByteToMessageDecoder{
                 in.readBytes(content);
                 responseCommand.setBody(content);
                 out.add(responseCommand);
-                //logger.info("response "+responseCommand.bodyToString());
             }
         }
     }
