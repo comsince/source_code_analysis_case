@@ -92,6 +92,7 @@ public class Client {
             logger.warn(errMsg);
             throw new Exception(errMsg, future.cause());
         }
+        isStop = false;
         channel = future.channel();
         return channel;
     }
@@ -125,7 +126,6 @@ public class Client {
 
     public void start(){
         try {
-            isStop = false;
             connect();
         } catch (Exception e) {
             e.printStackTrace();

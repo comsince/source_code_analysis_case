@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.nio.channels.SocketChannel;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 /**
