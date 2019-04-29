@@ -22,13 +22,16 @@ spring 集成mybatis-sharding jdbc
 
 
 ### t-io
-网络框架,原始版本来源于[t-io](https://github.com/tywo45/t-io)
+* 网络框架,原始版本来源于[t-io](https://github.com/tywo45/t-io)
 
 ### elastic-job
 
-分布式调度框架，主要采用quartz作为单击任务调度基础，结合 zookeeper的配置托管实现任务分片执行，失效转移等特性
+* 分布式调度框架，主要采用quartz作为单击任务调度基础，结合 zookeeper的配置托管实现任务分片执行，失效转移等特性
 
+### Netty Example
+* 基于Netty实现的长连接客户端
 
+## maven 创建项目
 ```shell
 mvn archetype:generate -DgroupId=com.comsince.github -DartifactId=push-connector-DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
 ```
