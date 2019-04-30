@@ -36,6 +36,7 @@
         <module>t-io</module>
         <module>elastic-job-spring</module>
         <module>netty-example</module>
+        <module>dubbo-example</module>
     </modules>
 
 
