@@ -1,0 +1,4 @@
+injection=com.comsince.github.extension.InjectExtImpl
+injection1=com.comsince.github.extension.InjectExtImpl1
+wrapper1=com.comsince.github.extension.InjectWrapper1
+wrapper2=com.comsince.github.extension.InjectWrapper2

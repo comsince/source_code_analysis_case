@@ -16,7 +16,7 @@ public class Server {
     public static void main(String[] args) throws IOException {
         ServiceConfig<GreetingsService> serviceConfig = new ServiceConfig<GreetingsService>();
         serviceConfig.setApplication(new ApplicationConfig("first-dubbo-provider"));
-        serviceConfig.setRegistry(new RegistryConfig("multicast://224.5.6.7:1234"));
+        serviceConfig.setRegistry(new RegistryConfig("zookeeper://172.16.46.201:2181"));
         serviceConfig.setInterface(GreetingsService.class);
         serviceConfig.setRef(new GreetingsServiceImpl());
         serviceConfig.export();
