@@ -17,7 +17,10 @@ import org.apache.dubbo.rpc.Protocol;
  **/
 public class Client {
     public static void main(String[] args) {
-        extensionTest();
+        PushService pushService = pushService();
+        for (int i=0;i<1;i++){
+            pushService.pushAll("push from client "+i);
+        }
     }
 
     public static void extensionTest(){
@@ -48,5 +51,14 @@ public class Client {
        System.out.println(protocol);
 
       // ExtensionLoader.getExtensionLoader(Transporter.class).getAdaptiveExtension();
+    }
+
+    public static PushService pushService(){
+        ReferenceConfig<PushService> referenceConfig = new ReferenceConfig<PushService>();
+        referenceConfig.setApplication(new ApplicationConfig("push-dubbo-consumer"));
+        referenceConfig.setRegistry(new RegistryConfig("zookeeper://zk-test-master1.meizu.mz:2181"));
+        referenceConfig.setInterface(PushService.class);
+        PushService pushService = referenceConfig.get();
+        return pushService;
     }
 }
