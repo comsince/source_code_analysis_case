@@ -1,0 +1,77 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <parent>
+    <groupId>com.comsince.github</groupId>
+    <artifactId>sourceanalysis</artifactId>
+    <version>1.0.0</version>
+  </parent>
+
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>web-spider</artifactId>
+  <packaging>jar</packaging>
+  <version>${project.verson}</version>
+  <name>mybatis-spring</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <curator.version>2.10.0</curator.version>
+    <commons-dbcp.version>1.4</commons-dbcp.version>
+    <h2.version>1.4.184</h2.version>
+    <logback.version>1.1.2</logback.version>
+    <lombok.version>1.16.4</lombok.version>
+  </properties>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>us.codecraft</groupId>
+      <artifactId>webmagic-extension</artifactId>
+      <version>0.7.3</version>
+      <exclusions>
+        <exclusion>
+          <groupId>redis.clients</groupId>
+          <artifactId>jedis</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+    </dependency>
+
+
+    <dependency>
+      <groupId>org.apache.curator</groupId>
+      <artifactId>curator-test</artifactId>
+      <version>${curator.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-dbcp</groupId>
+      <artifactId>commons-dbcp</artifactId>
+      <version>${commons-dbcp.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>${h2.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>${logback.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${lombok.version}</version>
+    </dependency>
+
+  </dependencies>
+</project>
